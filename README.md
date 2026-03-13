@@ -129,7 +129,7 @@ Optimal k selected via elbow plot on within-cluster sum of squares.
 #### Gradient Boosted Trees (PySpark MLlib)
 Predicts incumbent fare from market structure features.
 
-**Pipeline:** StringIndexer → OneHotEncoder → VectorAssembler → StandardScaler → GBTRegressor
+**Pipeline:** StringIndexer -> OneHotEncoder -> VectorAssembler -> StandardScaler -> GBTRegressor
 
 **Features:** HHI, carrier share, Spirit presence, Spirit fare, shorthaul flag, carrier OHE
 
@@ -140,7 +140,7 @@ Predicts incumbent fare from market structure features.
 |--------|----------|---------|
 | RMSE | $58.91 | $68.91 |
 | MAE | $43.40 | $51.95 |
-| R² | 0.2660 | **0.3313** |
+| R squared | 0.2660 | **0.3313** |
 
 Top features by importance: `carrier_share` > `HHI` > `carrier_ohe` > `spirit_present` > `spirit_fare`
 
@@ -150,21 +150,21 @@ Top features by importance: `carrier_share` > `HHI` > `carrier_ohe` > `spirit_pr
 
 1. **K-Means clustering** shows routes with the highest Spirit presence (Cluster 1, 43% frequency) have the lowest incumbent fares at $163 — $114 cheaper than premium routes where Spirit rarely competes, consistent with Spirit exerting meaningful downward pricing pressure.
 
-2. **Regression results** show `spirit_fare_lag` is positively associated with incumbent fares, suggesting parallel pricing behavior — when Spirit raises fares, incumbents follow. `HHI` and `carrier_share` are the dominant structural determinants of fare levels.
+2. **GBT feature importance** confirms that market structure variables (`carrier_share`, `HHI`) explain more fare variation than Spirit-specific variables, suggesting that while ULCC competition matters, route concentration remains the primary driver of incumbent pricing. Using balanced classes improved the R squared by 7 percentage points.
 
-3. **GBT feature importance** confirms that market structure variables (`carrier_share`, `HHI`) explain more fare variation than Spirit-specific variables, suggesting that while ULCC competition matters, route concentration remains the primary driver of incumbent pricing.
-
-4. **Shorthaul routes** show stronger Spirit effects than longhaul, consistent with Spirit's operational focus on short-distance markets.
+3. **Shorthaul routes** show stronger Spirit effects than longhaul, consistent with Spirit's operation and focus only on short-distance markets.
 
 ---
 
 ## Limitations
 
-- Not enough depth on regression parameters due to BTS website availability which affected data collection.
+- Not enough depth on regression parameters to investigate a causal relationship. Therefore the regression was left out of the analysis and focus was only on K-Means clustering and GBT models.
+- Furthermore, PySpark LinearRegression could not support clustering of standard errors by route which would make results more robust.
+- Missing quarters (2013 Q4, 2014 Q2/Q3, 2016 Q1) due to BTS website unavailability this week. Severely impacted the outcome of the project. 
 - DB1B is a 10% ticket sample, not a census of all fares
 - No booking window, seat class, or ancillary fee data available
-- R² of 0.33 reflects the difficulty of predicting fares without ticket-level detail and other exogenous factors that may be affecting prices.
-- PySpark LinearRegression does not support clustering of standard errors which would make results more robust.
+- R squared of 0.33 reflects the difficulty of predicting fares without ticket-level detail and other exogenous factors that may be affecting prices (for example demand, availability of substitutes and oil prices).
+
 
 ---
 
