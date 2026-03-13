@@ -6,9 +6,9 @@
 
 ## Overview
 
-This project investigates whether the entry and route expansion of Spirit Airlines (NK) causes legacy incumbent carriers to lower their fares on overlapping routes. Using distributed data processing via PySpark, we analyze millions of ticket-level observations from the U.S. Department of Transportation's DB1B Market dataset spanning 2008–2016.
+This project investigates whether the entry and route expansion of Spirit Airlines (NK) causes legacy incumbent carriers to lower their fares on overlapping routes. Using distributed data processing via PySpark, millions of ticket-level observations are analyzed from the U.S. Department of Transportation's DB1B Market dataset spanning 2008–2016.
 
-**Central Research Question:**
+**Research Question:**
 > Does the entry and route expansion of Spirit Airlines cause legacy incumbent carriers to lower their fares on overlapping routes?
 
 ---
